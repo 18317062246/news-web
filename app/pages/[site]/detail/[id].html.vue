@@ -23,7 +23,7 @@ onMounted(() => {
 
 <template>
   <PageLayout :site-key="String(route.params.site)" :brand-mark="site?.brandMark || ''" :brand-title="site?.brandTitle || ''">
-    <template #navigation><span class="site-nav-label">研究院观点</span></template>
+    <template #navigation><span class="site-nav-label">{{ site?.navTitle || site?.brandTitle }}</span></template>
     <template #main>
       <div v-if="pending" class="notice">正在加载文章…</div>
       <div v-else-if="error" class="notice notice--error">{{ error }}</div>

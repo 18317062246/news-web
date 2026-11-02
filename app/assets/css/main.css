@@ -75,13 +75,14 @@ a:focus-visible, button:focus-visible { outline: 3px solid #2577ad; outline-offs
 .sidebar-module { margin-bottom: 24px; border-top: 2px solid var(--color-brand); padding-top: 14px; }
 .sidebar-module__title { margin: 0 0 12px; font-size: 18px; }
 .sidebar-module__banner { display: block; max-width: 100%; height: auto; }
-.site-footer { margin-top: 70px; border-top: 1px solid var(--color-line); padding: 30px 0 50px; color: #b7bbc3; font-size: 12px; }
-.site-footer__inner { width: min(var(--content-width), calc(100% - 48px)); margin: 0 auto; }
-.site-footer__city-title { margin-bottom: 12px; color: #111; font-size: 14px; font-weight: 700; }
-.site-footer__cities { display: flex; flex-wrap: wrap; gap: 5px 15px; line-height: 22px; }
+.site-footer { margin-top: 92px; padding: 0 0 50px; color: #b7bbc3; font-size: 12px; }
+.site-footer__inner { width: min(1174px, calc(100% - 48px)); margin: 0 auto; }
+.site-footer__inner::before { content: ''; display: block; height: 30px; }
+.site-footer__city-title { margin: 18px 0 12px; color: #0b0000; font-size: 14px; line-height: 25px; font-weight: 400; }
+.site-footer__cities { display: flex; flex-wrap: wrap; gap: 0 15px; min-height: 82px; line-height: 25px; }
 .site-footer__cities a { color: #b7bbc3; }
 .site-footer__cities a:hover, .site-footer__legal a { color: var(--color-brand); }
-.site-footer__legal { margin-top: 20px; border-top: 1px solid #ececec; padding-top: 14px; line-height: 2.1; }
+.site-footer__legal { margin: 22px 0 12px; border-top: 1px solid #ececec; padding-top: 14px; line-height: 2.2; }
 .site-footer__police { margin-top: 8px; }
 .site-footer__police img { width: 16px; vertical-align: middle; margin-right: 5px; }
 .site-footer__wap { display: none; }
@@ -113,8 +114,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid #2577ad; outline-offs
   .article-detail__title { margin-bottom: 12px; font-size: 22px; line-height: 1.5; }
   .article-detail__meta { padding-bottom: 16px; }
   .article-body { padding-top: 18px; font-size: 16px; }
-  .site-footer { margin-top: 22px; padding: 15px 0 25px; font-size: 12px; }
+  .site-footer { margin-top: 22px; padding: 0 0 25px; font-size: 12px; }
   .site-footer__inner { width: 100%; }
+  .site-footer__inner::before { height: 0; }
   .site-footer__pc { display: none; }
   .site-footer__wap { display: block; padding: 0 15px; line-height: 2; }
 }
