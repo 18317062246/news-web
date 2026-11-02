@@ -44,7 +44,7 @@ function formatPublishDate(value: string | number | undefined) {
         <span class="article-row__copy">
           <span class="article-row__title">{{ article.Title }}</span>
           <span v-if="article.Description" class="article-row__description">{{ article.Description }}</span>
-          <span class="article-row__meta">{{ formatPublishDate(article.PublishDate) }}<span v-if="article.TypeName"> · {{ article.TypeName }}</span></span>
+          <span class="article-row__meta">{{ formatPublishDate(article.PublishDate) }}</span>
         </span>
       </NuxtLink>
     </article>

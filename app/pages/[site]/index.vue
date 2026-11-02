@@ -21,9 +21,9 @@ onMounted(async () => {
 
 <template>
   <PageLayout :site-key="key" :brand-mark="site?.brandMark || ''" :brand-title="site?.brandTitle || ''" :show-sidebar="rightSections.length > 0 || Boolean(site?.features.sidebar && sidebarItems.length)">
-    <template #navigation><span class="site-nav-label">中原地产研究院</span></template>
+    <template #navigation><span class="site-nav-label">{{ site?.navTitle || site?.brandTitle }}</span></template>
     <template #main>
-      <div class="legacy-home__heading"><h1 class="page-title">{{ site?.brandTitle || '研究院观点' }}</h1></div>
+      <div class="legacy-home__heading"><h1 class="page-title">{{ site?.brandTitle || site?.navTitle }}</h1></div>
       <nav v-if="homeSections.length" class="programa" aria-label="研究栏目">
         <button v-for="section in homeSections" :key="section.column.Id" type="button" class="programa__tab" :class="{ 'is-active': visibleSection?.column.Id === section.column.Id }" @click="activeId = section.column.Id">
           {{ section.column.ColumnsName }}

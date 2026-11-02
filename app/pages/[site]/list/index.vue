@@ -26,7 +26,7 @@ function goToPage(nextPage: number) {
 
 <template>
   <PageLayout :site-key="String(route.params.site)" :brand-mark="site?.brandMark || ''" :brand-title="site?.brandTitle || ''">
-    <template #navigation><span class="site-nav-label">研究院观点</span></template>
+    <template #navigation><span class="site-nav-label">{{ site?.navTitle || site?.brandTitle }}</span></template>
     <template #main>
       <h1 class="page-title">{{ activeColumn?.ColumnsName || '文章列表' }}</h1>
       <ColumnNav :site-key="String(route.params.site)" :columns="flattenColumns(columns)" :active-id="typeId" />

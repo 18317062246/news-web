@@ -1,3 +1,5 @@
 <script setup lang="ts">
-await navigateTo('/ccdata/', { replace: true })
+import { enabledCities } from '../config/sites'
+
+await navigateTo(`/${enabledCities[0]?.key || 'ccdata'}/`, { replace: true })
 </script>

@@ -30,3 +30,9 @@ The generated site reads article data at runtime from the existing API. Publishi
 The API platform follows the responsive breakpoint: widths up to 767px request `platform=wap`; wider screens request `platform=pc`. Crossing the breakpoint reloads the current columns and content so the API can apply its existing platform-specific filters.
 
 The build currently creates `.output/public/index.html`, not `ccdata/index.html`. The Nginx template uses a named fallback to serve that entry without sending internal redirects into the existing site's root handler. Legacy `/ccdata/list/c{id}/`, `/ccdata/list/c{id}/p{page}/` and `/ccdata/list/p{page}/` links redirect in the browser to the new list query route; the mobile prefix is removed by Nginx first. Unknown paths still show a page-not-found error.
+
+## 城市注册与下架
+
+前端城市统一维护在 `app/config/sites.ts` 的 `cityRegistry` 中。新增城市时添加一条 `SiteConfig` 记录；`key` 是前端路径和城市域名标识，`apiCity` 是 API 的 `cityen` 参数，`cityName` 是城市名称，`enabled` 控制是否开放。页脚外部城市链接维护在同文件的 `footerCities` 中。
+
+紧急下架时先将对应城市的 `enabled` 改为 `false`，重新构建并发布，访问该城市路径会返回 404。需要立即拦截流量时，在网关或 Nginx 临时添加 `location ^~ /城市key/ { return 404; }`，并同步在 API 网关或后端禁用对应的 `cityen`；恢复时撤销拦截并重新启用配置。若要从页脚隐藏外部城市链接，再从 `footerCities` 删除对应记录。
