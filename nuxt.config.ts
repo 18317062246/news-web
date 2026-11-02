@@ -8,7 +8,8 @@ export default defineNuxtConfig({
       link: [
         { rel: 'stylesheet', href: 'https://static.centanet.com/news/2024121377/pc/css/cent_basev3.css' },
         { rel: 'stylesheet', href: 'https://static.centanet.com/news/2024121377/pc/css/icons.css' },
-        { rel: 'stylesheet', href: 'https://static.centanet.com/news/2024121377/pc/css/keio.css' }
+        { rel: 'stylesheet', href: 'https://static.centanet.com/news/2024121377/pc/css/keio.css' },
+        { rel: 'icon', type: 'image/x-icon', href: 'https://static.centanet.com/news/2024121377/pc/images/favicon.ico' },
       ],
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
