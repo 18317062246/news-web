@@ -89,10 +89,17 @@ a:focus-visible, button:focus-visible { outline: 3px solid #2577ad; outline-offs
 .site-footer__city-title { margin: 18px 0 12px; color: #0b0000; font-size: 14px; line-height: 25px; font-weight: 400; }
 .site-footer__cities { display: flex; flex-wrap: wrap; gap: 0 15px; min-height: 82px; line-height: 25px; }
 .site-footer__cities a { color: #b7bbc3; }
-.site-footer__cities a:hover, .site-footer__legal a { color: var(--color-brand); }
+.site-footer__cities a:hover { color: #fe0808; }
 .site-footer__legal { margin: 22px 0 12px; border-top: 1px solid #ececec; padding-top: 14px; line-height: 2.2; }
+.site-footer__legal a, .site-footer__police a { color: #939393; }
 .site-footer__police { margin-top: 8px; }
+.site-footer__police a { text-decoration: none; }
 .site-footer__police img { width: 16px; vertical-align: middle; margin-right: 5px; }
+.site-footer__infotxt { display: flex; align-items: flex-start; margin-top: 15px; color: #b7bbc3; font-size: 12px; }
+.site-footer__brand-logo { display: block; flex: 0 0 auto; width: auto; height: 60px; }
+.site-footer__qr { display: block; flex: 0 0 60px; width: 60px; height: 60px; margin: 0 15px 0 18px; }
+.site-footer__appinfo { display: flex; flex-direction: column; gap: 3px; line-height: 1.5; }
+.site-footer__appinfo a { display: inline-block; margin-right: 24px; color: #fe0808; text-decoration: underline; }
 .site-footer__wap { display: none; }
 
 @media (max-width: 767px) {
