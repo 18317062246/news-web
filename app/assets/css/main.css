@@ -83,6 +83,20 @@ a:focus-visible, button:focus-visible { outline: 3px solid #2577ad; outline-offs
 .sidebar-module { margin-bottom: 24px; border-top: 2px solid var(--color-brand); padding-top: 14px; }
 .sidebar-module__title { margin: 0 0 12px; font-size: 18px; }
 .sidebar-module__banner { display: block; max-width: 100%; height: auto; }
+.sidebar-module--ranking { margin: 0; border: 1px solid #dedede; padding: 22px 20px 20px; background: #fff; box-shadow: 0 2px 7px rgb(0 0 0 / 14%); }
+.sidebar-module--ranking .sidebar-module__title { display: flex; align-items: center; gap: 30px; margin: 0 10px 22px; font-size: 18px; font-weight: 500; white-space: nowrap; }
+.sidebar-module--ranking .sidebar-module__title::before, .sidebar-module--ranking .sidebar-module__title::after { content: ''; flex: 1; height: 1px; background: #ececec; }
+.hot-ranking { margin: 0; padding: 0; list-style: none; }
+.hot-ranking__item { display: grid; grid-template-columns: 26px minmax(0, 1fr); column-gap: 12px; align-items: start; padding: 0 0 10px; }
+.hot-ranking__item:last-child { padding-bottom: 0; }
+.hot-ranking__rank { display: grid; width: 24px; height: 24px; place-items: center; color: #c7c7c7; font-size: 15px; font-weight: 700; font-style: italic; }
+.hot-ranking__item:nth-child(-n+3) .hot-ranking__rank { border-radius: 50%; color: #fff; font-style: normal; }
+.hot-ranking__item:nth-child(1) .hot-ranking__rank { background: #ff7043; }
+.hot-ranking__item:nth-child(2) .hot-ranking__rank { background: #ffc400; }
+.hot-ranking__item:nth-child(3) .hot-ranking__rank { background: #29b6f6; }
+.hot-ranking__item > a { display: block; overflow: hidden; color: #888; font-size: 13px; line-height: 1.6; text-overflow: ellipsis; white-space: nowrap; }
+.hot-ranking__item > a:hover { color: var(--color-brand); }
+.hot-ranking__date { grid-column: 2; margin-top: 4px; color: #999; font-size: 14px; line-height: 1.5; text-align: right; }
 .site-footer { margin-top: 92px; padding: 0 0 50px; color: #b7bbc3; font-size: 12px; }
 .site-footer__inner { width: min(1174px, calc(100% - 48px)); margin: 0 auto; }
 .site-footer__inner::before { content: ''; display: block; height: 30px; }

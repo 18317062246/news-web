@@ -9,6 +9,7 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
   const mockApi = String(useRuntimeConfig().public.mockApi) === 'true'
   const columns = ref<ColumnNode[]>([])
   const articles = ref<ArticleSummary[]>([])
+  const hotArticles = ref<ArticleSummary[]>([])
   const homeSections = ref<{ column: ColumnNode; articles: ArticleSummary[] }[]>([])
   const rightSections = ref<{ column: ColumnNode; articles: ArticleSummary[] }[]>([])
   const article = ref<ArticleDetail | null>(null)
@@ -34,6 +35,7 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
     } else if (lastList) {
       void loadColumns()
       void loadArticles(lastList.typeId, lastList.page)
+      void loadHotArticles()
     }
   }
 
@@ -70,6 +72,18 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
       error.value = cause instanceof Error ? cause.message : '文章加载失败'
     } finally {
       pending.value = false
+    }
+  }
+
+  async function loadHotArticles() {
+    if (!site.value) return
+    try {
+      const result = mockApi
+        ? mockArticles()
+        : await getArticles(apiBase, site.value.apiCity, platform.value, { page: 1, pageSize: 10 })
+      hotArticles.value = normalizeArticles(result.Result).slice(0, 10)
+    } catch {
+      hotArticles.value = []
     }
   }
 
@@ -138,5 +152,5 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
     }
   }
 
-  return { columns, articles, homeSections, rightSections, article, pageTotal, total, pending, error, platform, loadColumns, loadArticles, loadArticle, loadHome }
+  return { columns, articles, hotArticles, homeSections, rightSections, article, pageTotal, total, pending, error, platform, loadColumns, loadArticles, loadHotArticles, loadArticle, loadHome }
 }
