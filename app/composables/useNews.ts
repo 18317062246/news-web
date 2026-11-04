@@ -64,7 +64,9 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
     pending.value = true
     error.value = ''
     try {
-      const result = mockApi ? mockArticles() : await getArticles(apiBase, site.value.apiCity, platform.value, { typeId, page })
+      const result = mockApi
+        ? mockArticles()
+        : await getArticles(apiBase, site.value.apiCity, platform.value, { typeId, page, pageSize: 10 })
       articles.value = normalizeArticles(result.Result)
       pageTotal.value = Number(result.Result?.PageTotal || 0)
       total.value = Number(result.Total || 0)

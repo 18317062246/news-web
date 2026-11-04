@@ -26,6 +26,12 @@ function goToPage(nextPage: number) {
   router.push({ query: { ...route.query, page: nextPage } })
 }
 
+const visiblePages = computed(() => {
+  const start = Math.max(1, Math.min(page.value - 2, pageTotal.value - 4))
+  const end = Math.min(pageTotal.value, start + 4)
+  return Array.from({ length: Math.max(0, end - start + 1) }, (_, index) => start + index)
+})
+
 function formatPublishDate(value: ArticleSummary['PublishDate']) {
   if (value === undefined || value === '') return ''
   const numericValue = Number(value)
@@ -52,9 +58,14 @@ function formatPublishDate(value: ArticleSummary['PublishDate']) {
       </div>
       <ArticleList v-else :site-key="String(route.params.site)" :articles="articles" :default-image="site?.defaultImage" />
       <nav v-if="pageTotal > 1" class="pagination" aria-label="文章分页">
-        <a v-if="page > 1" href="#" @click.prevent="goToPage(page - 1)">上一页</a>
-        <span>第 {{ page }} / {{ pageTotal }} 页</span>
-        <a v-if="page < pageTotal" href="#" @click.prevent="goToPage(page + 1)">下一页</a>
+        <div class="pagination__inner">
+          <a v-if="page > 1" href="#" aria-label="上一页" @click.prevent="goToPage(page - 1)">&lt;</a>
+          <template v-for="pageNumber in visiblePages" :key="pageNumber">
+            <span v-if="pageNumber === page" class="is-current" aria-current="page">{{ pageNumber }}</span>
+            <a v-else href="#" @click.prevent="goToPage(pageNumber)">{{ pageNumber }}</a>
+          </template>
+          <a v-if="page < pageTotal" href="#" aria-label="下一页" @click.prevent="goToPage(page + 1)">&gt;</a>
+        </div>
       </nav>
     </template>
     <template #sidebar>
