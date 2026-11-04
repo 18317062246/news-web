@@ -87,7 +87,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #2577ad; outline-offs
 .site-footer__inner { width: min(1174px, calc(100% - 48px)); margin: 0 auto; }
 .site-footer__inner::before { content: ''; display: block; height: 30px; }
 .site-footer__city-title { margin: 18px 0 12px; color: #0b0000; font-size: 14px; line-height: 25px; font-weight: 400; }
-.site-footer__cities { display: flex; flex-wrap: wrap; gap: 0 15px; min-height: 82px; line-height: 25px; }
+.site-footer__cities { display: flex; flex-wrap: wrap; gap: 0 15px; min-height: 82px; line-height: 25px; font-size: 14px}
 .site-footer__cities a { color: #b7bbc3; }
 .site-footer__cities a:hover { color: #fe0808; }
 .site-footer__legal { margin: 22px 0 12px; border-top: 1px solid #ececec; padding-top: 14px; line-height: 2.2; }

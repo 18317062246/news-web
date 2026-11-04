@@ -2,6 +2,32 @@
 import { footerCities } from '../config/sites'
 
 defineProps<{ siteKey: string; brandMark: string; brandTitle: string; showSidebar?: boolean }>()
+
+interface AppVersionInfo {
+  version: string
+  currentVersionReleaseDate: string
+}
+
+const { data: appVersion } = await useFetch<AppVersionInfo>('/api/app-version', {
+  default: () => ({ version: '', currentVersionReleaseDate: '' })
+})
+
+const formattedReleaseDate = computed(() => {
+  const value = appVersion.value?.currentVersionReleaseDate
+  if (!value) return '--'
+
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return '--'
+
+  const parts = new Intl.DateTimeFormat('zh-CN', {
+    timeZone: 'Asia/Shanghai',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(date)
+  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((item) => item.type === type)?.value || ''
+  return `${part('year')}年${part('month')}月${part('day')}日`
+})
 </script>
 
 <template>
@@ -97,7 +123,7 @@ defineProps<{ siteKey: string; brandMark: string; brandTitle: string; showSideba
             >
 
             <div class="site-footer__appinfo">
-              <span>APP名称：中原找房　版本号：7.48.6　更新：2026年10月09日</span>
+              <span>APP名称：中原找房　版本号：{{ appVersion?.version || '--' }}　更新：{{ formattedReleaseDate }}</span>
               <span>开发运营商：中原（中国）房地产代理有限公司</span>
               <span>
             <a href="https://static.centanet.com/agreement/privacy.html" target="_blank" rel="noreferrer">
