@@ -141,8 +141,13 @@ const formattedReleaseDate = computed(() => {
         </div>
 
         <div class="site-footer__wap">
-          开发者：中原（中国）房地产代理有限公司<br>
-          中原地产研究院
+          <div class="site-footer__wap-company">开发者：中原（中国）房地产代理有限公司</div>
+          <div>版本：{{ appVersion?.version || '--' }}</div>
+          <div class="site-footer__wap-update">
+            <span>更新时间：{{ formattedReleaseDate }}</span>
+            <a href="https://static.centanet.com/agreement/authority.html" target="_blank" rel="noreferrer">权限详情</a>
+            <a href="https://static.centanet.com/agreement/privacy.html" target="_blank" rel="noreferrer">隐私政策</a>
+          </div>
         </div>
       </div>
     </footer>
