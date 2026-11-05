@@ -10,12 +10,14 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
   const columns = ref<ColumnNode[]>([])
   const articles = ref<ArticleSummary[]>([])
   const hotArticles = ref<ArticleSummary[]>([])
-  const homeSections = ref<{ column: ColumnNode; articles: ArticleSummary[] }[]>([])
+  const homeSections = ref<{ column: ColumnNode; articles: ArticleSummary[]; page: number; pageTotal: number }[]>([])
   const rightSections = ref<{ column: ColumnNode; articles: ArticleSummary[] }[]>([])
   const article = ref<ArticleDetail | null>(null)
   const pageTotal = ref(0)
   const total = ref(0)
   const pending = ref(false)
+  const appendPending = ref(false)
+  const appendError = ref('')
   const error = ref('')
   const platform = ref<ContentPlatform>('pc')
   let lastArticleId: number | undefined
@@ -74,6 +76,58 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
       error.value = cause instanceof Error ? cause.message : '文章加载失败'
     } finally {
       pending.value = false
+    }
+  }
+
+  async function loadMoreArticles(typeId: number | undefined, page: number) {
+    if (!site.value || appendPending.value) return false
+    appendPending.value = true
+    appendError.value = ''
+    try {
+      const result = mockApi
+        ? mockArticles()
+        : await getArticles(apiBase, site.value.apiCity, platform.value, { typeId, page, pageSize: 10 })
+      const nextArticles = normalizeArticles(result.Result)
+      const existingIds = new Set(articles.value.map((article) => article.ID))
+      articles.value = [...articles.value, ...nextArticles.filter((article) => !existingIds.has(article.ID))]
+      pageTotal.value = Number(result.Result?.PageTotal || pageTotal.value)
+      total.value = Number(result.Total || total.value)
+      lastList = { typeId, page }
+      return true
+    } catch (cause) {
+      appendError.value = cause instanceof Error ? cause.message : '加载更多文章失败'
+      return false
+    } finally {
+      appendPending.value = false
+    }
+  }
+
+  async function loadMoreHomeSection(columnId: number, page: number) {
+    if (!site.value || appendPending.value) return false
+    const section = homeSections.value.find((item) => item.column.Id === columnId)
+    if (!section || page > section.pageTotal) return false
+
+    appendPending.value = true
+    appendError.value = ''
+    try {
+      const result = mockApi
+        ? mockArticles()
+        : await getArticles(apiBase, site.value.apiCity, platform.value, {
+          typeId: columnId,
+          page,
+          pageSize: 10
+        })
+      const nextArticles = normalizeArticles(result.Result)
+      const existingIds = new Set(section.articles.map((article) => article.ID))
+      section.articles.push(...nextArticles.filter((article) => !existingIds.has(article.ID)))
+      section.page = page
+      section.pageTotal = Number(result.Result?.PageTotal || section.pageTotal)
+      return true
+    } catch (cause) {
+      appendError.value = cause instanceof Error ? cause.message : '加载更多文章失败'
+      return false
+    } finally {
+      appendPending.value = false
     }
   }
 
@@ -139,7 +193,12 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
         const result = mockApi
           ? mockArticles()
           : await getArticles(apiBase, site.value!.apiCity, platform.value, { typeId: column.Id, page: 1, pageSize: 10 })
-        return { column, articles: normalizeArticles(result.Result) }
+        return {
+          column,
+          articles: normalizeArticles(result.Result),
+          page: 1,
+          pageTotal: Number(result.Result?.PageTotal || 1)
+        }
       }
       const [main, side] = await Promise.all([
         Promise.all(mainColumns.map(loadSection)),
@@ -154,5 +213,5 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
     }
   }
 
-  return { columns, articles, hotArticles, homeSections, rightSections, article, pageTotal, total, pending, error, platform, loadColumns, loadArticles, loadHotArticles, loadArticle, loadHome }
+  return { columns, articles, hotArticles, homeSections, rightSections, article, pageTotal, total, pending, appendPending, appendError, error, platform, loadColumns, loadArticles, loadMoreArticles, loadMoreHomeSection, loadHotArticles, loadArticle, loadHome }
 }

@@ -2,10 +2,17 @@
 import { sidebarBySite } from '../../config/sidebar'
 const route = useRoute()
 const { site, key } = useSite(route.params.site as string)
-const { homeSections, rightSections, pending, error, loadHome } = useNews(site)
+const {
+  homeSections, rightSections, pending, appendPending, appendError,
+  error, loadHome, loadMoreHomeSection
+} = useNews(site)
 const sidebarItems = computed(() => sidebarBySite[key.value] || [])
 const activeId = ref<number | undefined>()
 const visibleSection = computed(() => homeSections.value.find(({ column }) => column.Id === activeId.value) || homeSections.value[0])
+const isWap = ref(false)
+const loadMoreSentinel = ref<HTMLElement | null>(null)
+let loadMoreObserver: IntersectionObserver | undefined
+let scrollCheckFrame = 0
 
 watch(homeSections, (sections) => {
   const first = sections[0]
@@ -14,9 +21,58 @@ watch(homeSections, (sections) => {
 
 useHead(() => ({ title: site.value?.title || '研究院观点' }))
 
+function updateViewportMode() {
+  isWap.value = window.matchMedia('(max-width: 767px)').matches
+}
+
+async function loadNextPage() {
+  const section = visibleSection.value
+  if (!isWap.value || !section || appendPending.value || section.page >= section.pageTotal) return
+  await loadMoreHomeSection(section.column.Id, section.page + 1)
+}
+
+async function observeSentinel() {
+  await nextTick()
+  if (!loadMoreObserver || !loadMoreSentinel.value) return
+  loadMoreObserver.disconnect()
+  if (isWap.value && visibleSection.value && visibleSection.value.page < visibleSection.value.pageTotal) {
+    loadMoreObserver.observe(loadMoreSentinel.value)
+  }
+}
+
+function checkScrollPosition() {
+  if (!isWap.value || scrollCheckFrame) return
+  scrollCheckFrame = window.requestAnimationFrame(() => {
+    scrollCheckFrame = 0
+    const sentinel = loadMoreSentinel.value
+    if (sentinel && sentinel.getBoundingClientRect().top <= window.innerHeight + 500) {
+      void loadNextPage()
+    }
+  })
+}
+
 onMounted(async () => {
+  updateViewportMode()
+  window.addEventListener('resize', updateViewportMode, { passive: true })
   await loadHome()
+  loadMoreObserver = new IntersectionObserver((entries) => {
+    if (entries.some((entry) => entry.isIntersecting)) void loadNextPage()
+  }, { rootMargin: '500px 0px' })
+  window.addEventListener('scroll', checkScrollPosition, { passive: true })
+  document.addEventListener('scroll', checkScrollPosition, { capture: true, passive: true })
+  await observeSentinel()
+  checkScrollPosition()
 })
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateViewportMode)
+  window.removeEventListener('scroll', checkScrollPosition)
+  document.removeEventListener('scroll', checkScrollPosition, true)
+  if (scrollCheckFrame) window.cancelAnimationFrame(scrollCheckFrame)
+  loadMoreObserver?.disconnect()
+})
+
+watch([isWap, activeId, homeSections], () => { void observeSentinel() }, { deep: true })
 </script>
 
 <template>
@@ -37,6 +93,18 @@ onMounted(async () => {
       </div>
       <template v-else-if="visibleSection">
         <ArticleList :site-key="key" :articles="visibleSection.articles" :default-image="site?.defaultImage" />
+        <div v-if="isWap" ref="loadMoreSentinel" class="wap-load-more" aria-live="polite">
+          <span v-if="appendPending">正在加载更多资讯…</span>
+          <template v-else-if="appendError">
+            <span>{{ appendError }}</span>
+            <button type="button" @click="loadNextPage">重试</button>
+          </template>
+          <template v-else-if="visibleSection.page < visibleSection.pageTotal">
+            <span>继续上滑加载更多资讯</span>
+            <button type="button" @click="loadNextPage">加载更多</button>
+          </template>
+          <span v-else-if="visibleSection.articles.length">已显示全部资讯</span>
+        </div>
       </template>
       <p v-else class="empty-state">暂无文章</p>
     </template>
