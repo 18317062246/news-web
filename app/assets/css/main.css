@@ -29,6 +29,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #2577ad; outline-offs
 .page-layout__main { min-width: 0; }
 .page-layout__sidebar { min-width: 0; }
 .page-title { margin: 0; font-size: 24px; line-height: 1.35; font-weight: 650; color: #333; }
+.list-page__title { margin-bottom: 20px; }
 .legacy-home__heading { display: flex; align-items: baseline; justify-content: space-between; padding: 6px 0 20px; }
 .programa { display: flex; align-items: stretch; min-width: 0; overflow-x: auto; border-bottom: 1px solid #dedede; margin-bottom: 8px; scrollbar-width: thin; }
 .programa__tab { position: relative; flex: 0 0 auto; min-height: 48px; padding: 0 19px; border: 0; border-bottom: 3px solid transparent; background: transparent; color: #555; font-size: 16px; cursor: pointer; }
@@ -40,7 +41,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #2577ad; outline-offs
 .column-nav { display: flex; align-items: center; gap: 0; overflow-x: auto; border-bottom: 1px solid var(--color-line); margin-bottom: 18px; scrollbar-width: thin; }
 .column-nav__link { flex: 0 0 auto; min-height: 44px; padding: 12px 20px; color: #4b5459; border-bottom: 2px solid transparent; }
 .column-nav__link:hover, .column-nav__link.is-active { color: var(--color-brand); border-bottom-color: var(--color-brand); }
-.article-list { border-top: 1px solid var(--color-line); }
+.article-list { border-top: none }
 .article-row { border-bottom: 1px solid var(--color-line); }
 .article-row__link { display: flex; align-items: flex-start; gap: 20px; padding: 18px 0; }
 .article-row__image { width: 220px; aspect-ratio: 450 / 320; object-fit: cover; flex: 0 0 auto; background: #f0f2f2; }
@@ -85,6 +86,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #2577ad; outline-offs
 .article-body img { max-width: 100%; height: auto; }
 .article-body table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
 .article-body iframe, .article-body video { max-width: 100%; }
+.detail-mobile-ranking { display: none; }
 .sidebar-module { margin-bottom: 24px; border-top: 2px solid var(--color-brand); padding-top: 14px; }
 .sidebar-module__title { margin: 0 0 12px; font-size: 18px; }
 .sidebar-module__banner { display: block; max-width: 100%; height: auto; }
@@ -106,7 +108,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #2577ad; outline-offs
 .site-footer__inner { width: min(1174px, calc(100% - 48px)); margin: 0 auto; }
 .site-footer__inner::before { content: ''; display: block; height: 30px; }
 .site-footer__city-title { margin: 18px 0 12px; color: #0b0000; font-size: 14px; line-height: 25px; font-weight: 400; }
-.site-footer__cities { display: flex; flex-wrap: wrap; gap: 0 15px; min-height: 82px; line-height: 25px; font-size: 14px}
+.site-footer__cities { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 0 15px; line-height: 27px; font-size: 14px; }
 .site-footer__cities a { color: #b7bbc3; }
 .site-footer__cities a:hover { color: #fe0808; }
 .site-footer__legal { margin: 22px 0 12px; border-top: 1px solid #ececec; padding-top: 14px; line-height: 2.2; }
@@ -132,6 +134,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #2577ad; outline-offs
   .legacy-home__heading { padding: 18px 16px 12px; }
   .legacy-home__heading { display: none; }
   .page-title { font-size: 20px; }
+  .list-page__title { margin: 0; padding: 18px 16px 12px; }
   .programa { margin: 0; padding: 0 8px; border-bottom: 1px solid #e5e5e5; }
   .programa__tab { min-height: 48px; padding: 0 15px; font-size: 15px; }
   .programa__tab:first-child { padding-left: 10px; }
@@ -151,6 +154,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid #2577ad; outline-offs
   .article-detail__header { padding: 0 0 16px; }
   .article-detail__title { margin-bottom: 12px; font-size: 22px; line-height: 1.5; }
   .article-body { padding-top: 18px; font-size: 16px; }
+  .detail-mobile-ranking { display: block; border-top: 16px solid #eee; padding-top: 70px; }
+  .detail-mobile-ranking h2 { margin: 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--color-line); color: #333; font-size: 18px; }
   .site-footer { margin-top: 22px; padding: 0 0 25px; font-size: 12px; }
   .site-footer__inner { width: 100%; }
   .site-footer__inner::before { height: 0; }

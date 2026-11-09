@@ -34,6 +34,7 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
     } else if (lastArticleId) {
       void loadColumns()
       void loadArticle(lastArticleId)
+      void loadHotArticles()
     } else if (lastList) {
       void loadColumns()
       void loadArticles(lastList.typeId, lastList.page)

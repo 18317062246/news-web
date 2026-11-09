@@ -72,9 +72,9 @@ export const enabledCities = cityRegistry.filter((site) => site.enabled)
 // External city portals shown in the shared footer. Keep this separate from
 // cityRegistry because these links do not imply a frontend site is enabled.
 export const footerCities = [
-  ['tj', '天津'], ['bj', '北京'], ['sh', '上海'], ['gz', '广州'], ['sz', '深圳'], ['mo', '澳门'], ['cq', '重庆'], ['cd', '成都'],
+  ['hk', '香港'], ['tj', '天津'], ['bj', '北京'], ['sh', '上海'], ['gz', '广州'], ['sz', '深圳'], ['mo', '澳门'], ['cq', '重庆'], ['cd', '成都'],
   ['wh', '武汉'], ['cs', '长沙'], ['hz', '惠州'], ['dg', '东莞'], ['cc', '长春'], ['dl', '大连'], ['sy', '沈阳'], ['nn', '南宁'],
   ['zj', '杭州'], ['nc', '南昌'], ['zh', '珠海'], ['xa', '西安'], ['fs', '佛山'], ['ganzhou', '赣州'], ['fz', '福州'], ['xm', '厦门'],
   ['hf', '合肥'], ['zs', '中山'], ['km', '昆明'], ['hrb', '哈尔滨'], ['nb', '宁波'], ['zq', '肇庆'], ['xy', '襄阳'], ['jn', '济南'],
-  ['zz', '郑州'], ['hq', '横琴'], ['lz', '兰州']
+  ['zz', '郑州'], ['lz', '兰州'], ['wx', '无锡'], ['yz', '扬州']
 ] as const

@@ -113,8 +113,7 @@ function formatPublishDate(value: ArticleSummary['PublishDate']) {
   <PageLayout :site-key="String(route.params.site)" :brand-mark="site?.brandMark || ''" :brand-title="site?.brandTitle || ''" show-sidebar>
     <template #navigation><span class="site-nav-label">{{ site?.navTitle || site?.brandTitle }}</span></template>
     <template #main>
-      <h1 class="page-title">{{ activeColumn?.ColumnsName || '文章列表' }}</h1>
-      <ColumnNav :site-key="String(route.params.site)" :columns="flattenColumns(columns)" :active-id="typeId" />
+      <h1 class="page-title list-page__title">{{ activeColumn?.ColumnsName || '文章列表' }}</h1>
       <p v-if="pending" class="notice">正在加载文章…</p>
       <div v-else-if="error" class="notice notice--error">
         <p>{{ error }}</p>

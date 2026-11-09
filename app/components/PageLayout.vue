@@ -68,7 +68,7 @@ const formattedReleaseDate = computed(() => {
             <a
                 v-for="[code, name] in footerCities"
                 :key="code"
-                :href="`https://${code}.centanet.com/`"
+                :href="code === 'hk' ? 'https://hk.centanet.com/xianggang/list/new-property' : `https://${code}.centanet.com/`"
                 target="_blank"
                 rel="noreferrer"
             >
@@ -116,7 +116,7 @@ const formattedReleaseDate = computed(() => {
 
             <img
                 class="site-footer__qr"
-                src="https://static.centanet.com/news/2023042075/6/20231020/pc/images/twocodeimg.jpg"
+                src="https://static.centanet.com/pcweb/v-dwq2609071055/images/download_app3.jpg?v-dwq2609071055"
                 alt="中原找房二维码"
                 width="60"
                 height="60"
