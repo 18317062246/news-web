@@ -35,7 +35,7 @@ export const cityRegistry: SiteConfig[] = [
     features: { search: false, citySwitch: false, sidebar: false }
   },
   {
-    key: 'tj', apiCity: 'tj', cityName: '天津', enabled: false,
+    key: 'tj', apiCity: 'tj', cityName: '天津', enabled: true,
     navTitle: '天津资讯', title: '天津房地产资讯', brandMark: '天津中原', brandTitle: '天津资讯',
     staticPrefix: '', defaultImage,
     features: { search: false, citySwitch: false, sidebar: false }
