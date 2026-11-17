@@ -119,7 +119,7 @@ function formatPublishDate(value: ArticleSummary['PublishDate']) {
         <p>{{ error }}</p>
         <button class="retry-button" type="button" @click="loadArticles(typeId, page)">重试</button>
       </div>
-      <ArticleList v-else :site-key="String(route.params.site)" :articles="articles" :default-image="site?.defaultImage" />
+      <ArticleList v-else :site-key="String(route.params.site)" :articles="articles" :default-image="site?.defaultImage" open-in-new-tab />
       <div v-if="isWap" ref="loadMoreSentinel" class="wap-load-more" aria-live="polite">
         <span v-if="appendPending">正在加载更多资讯…</span>
         <template v-else-if="appendError">
@@ -149,7 +149,12 @@ function formatPublishDate(value: ArticleSummary['PublishDate']) {
           <ol v-if="hotArticles.length" class="hot-ranking">
             <li v-for="(article, index) in hotArticles" :key="article.ID" class="hot-ranking__item">
               <span class="hot-ranking__rank">{{ index + 1 }}</span>
-              <NuxtLink :to="`/${String(route.params.site)}/detail/${article.ID}.html`" :title="article.Title">
+              <NuxtLink
+                :to="`/${String(route.params.site)}/detail/${article.ID}.html`"
+                :title="article.Title"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {{ article.Title }}
               </NuxtLink>
               <time class="hot-ranking__date">{{ formatPublishDate(article.PublishDate) }}</time>

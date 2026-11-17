@@ -92,7 +92,7 @@ watch([isWap, activeId, homeSections], () => { void observeSentinel() }, { deep:
         <button class="retry-button" type="button" @click="loadHome()">重试</button>
       </div>
       <template v-else-if="visibleSection">
-        <ArticleList :site-key="key" :articles="visibleSection.articles" :default-image="site?.defaultImage" />
+        <ArticleList :site-key="key" :articles="visibleSection.articles" :default-image="site?.defaultImage" open-in-new-tab />
         <div v-if="isWap" ref="loadMoreSentinel" class="wap-load-more" aria-live="polite">
           <span v-if="appendPending">正在加载更多资讯…</span>
           <template v-else-if="appendError">

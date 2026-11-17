@@ -74,7 +74,7 @@ function formatRankingDate(value: string | number | undefined) {
       </article>
       <section v-if="article && hotArticles.length" class="detail-mobile-ranking">
         <h2>热点排行</h2>
-        <ArticleList :site-key="String(route.params.site)" :articles="hotArticles" :default-image="site?.defaultImage" />
+        <ArticleList :site-key="String(route.params.site)" :articles="hotArticles" :default-image="site?.defaultImage" open-in-new-tab />
       </section>
     </template>
     <template #sidebar>
@@ -83,7 +83,12 @@ function formatRankingDate(value: string | number | undefined) {
           <ol class="hot-ranking">
             <li v-for="(item, index) in hotArticles" :key="item.ID" class="hot-ranking__item">
               <span class="hot-ranking__rank">{{ index + 1 }}</span>
-              <NuxtLink :to="`/${String(route.params.site)}/detail/${item.ID}.html`" :title="item.Title">{{ item.Title }}</NuxtLink>
+              <NuxtLink
+                :to="`/${String(route.params.site)}/detail/${item.ID}.html`"
+                :title="item.Title"
+                target="_blank"
+                rel="noopener noreferrer"
+              >{{ item.Title }}</NuxtLink>
               <time class="hot-ranking__date">{{ formatRankingDate(item.PublishDate) }}</time>
             </li>
           </ol>

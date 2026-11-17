@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import type { ArticleSummary } from '../types/news'
 
-const props = defineProps<{ siteKey: string; articles: ArticleSummary[]; defaultImage?: string }>()
+const props = defineProps<{
+  siteKey: string
+  articles: ArticleSummary[]
+  defaultImage?: string
+  openInNewTab?: boolean
+}>()
 
 function articleHref(siteKey: string, id: number) {
   return `/${siteKey}/detail/${id}.html`
@@ -36,7 +41,12 @@ function formatPublishDate(value: string | number | undefined) {
 <template>
   <div v-if="articles.length" class="article-list">
     <article v-for="article in articles" :key="article.ID" class="article-row">
-      <NuxtLink :to="articleHref(siteKey, article.ID)" class="article-row__link">
+      <NuxtLink
+        :to="articleHref(siteKey, article.ID)"
+        class="article-row__link"
+        :target="props.openInNewTab ? '_blank' : undefined"
+        :rel="props.openInNewTab ? 'noopener noreferrer' : undefined"
+      >
         <picture>
           <source media="(max-width: 767px)" :srcset="imageUrl(article.LitPic, 'mobile')">
           <img class="article-row__image" :src="imageUrl(article.LitPic, 'desktop')" alt="" loading="lazy" @error="onImageError">
