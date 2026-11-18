@@ -23,7 +23,11 @@ const safeContent = computed(() => article.value?.Content ? DOMPurify.sanitize(a
   FORBID_ATTR: ['style', 'onerror', 'onclick', 'onload']
 }) : '')
 
-useHead(() => ({ title: article.value?.Title ? `${article.value.Title} - ${site.value?.title || ''}` : site.value?.title }))
+useHead(() => ({
+  title: article.value?.Typename
+    ? `中原地产_${article.value.Typename}`
+    : site.value?.title || '中原地产'
+}))
 
 function loadDetail() {
   const id = Number(String(route.params.id).replace(/\.html$/, ''))
