@@ -8,7 +8,7 @@ interface AppVersionInfo {
   currentVersionReleaseDate: string
 }
 
-const { data: appVersion } = await useFetch<AppVersionInfo>('/api/app-version', {
+const { data: appVersion } = await useFetch<AppVersionInfo>('/news-api/app-version', {
   default: () => ({ version: '', currentVersionReleaseDate: '' })
 })
 
