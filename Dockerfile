@@ -27,10 +27,6 @@ WORKDIR /app
 
 COPY --from=builder /app/.output ./.output
 
-ENV HOST=0.0.0.0 \
-    PORT=3000 \
-    NUXT_PUBLIC_ENV=prd
-
 EXPOSE 3000
 
 CMD ["node", ".output/server/index.mjs"]
