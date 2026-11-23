@@ -2,7 +2,7 @@ export default defineNuxtConfig({
   ssr: false,
   app: {
     baseURL: '/',
-    buildAssetsDir: '/_ccdata_assets/',
+    buildAssetsDir: '/',
     head: {
       htmlAttrs: { lang: 'zh-CN' },
       link: [
