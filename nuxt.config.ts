@@ -1,8 +1,6 @@
 export default defineNuxtConfig({
   ssr: false,
   app: {
-    baseURL: '/',
-    buildAssetsDir: '/',
     head: {
       htmlAttrs: { lang: 'zh-CN' },
       link: [
