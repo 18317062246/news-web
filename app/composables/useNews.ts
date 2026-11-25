@@ -20,33 +20,10 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
   const appendError = ref('')
   const error = ref('')
   const platform = ref<ContentPlatform>('pc')
-  let lastArticleId: number | undefined
-  let lastList: { typeId?: number; page: number } | undefined
-  let lastView: 'home' | 'list' | 'detail' | undefined
-
-  function syncPlatform() {
-    const nextPlatform: ContentPlatform = window.matchMedia('(max-width: 767px)').matches ? 'wap' : 'pc'
-    if (nextPlatform === platform.value) return
-    platform.value = nextPlatform
-    if (!lastView) return
-    if (lastView === 'home') {
-      void loadHome()
-    } else if (lastArticleId) {
-      void loadColumns()
-      void loadArticle(lastArticleId)
-      void loadHotArticles()
-    } else if (lastList) {
-      void loadColumns()
-      void loadArticles(lastList.typeId, lastList.page)
-      void loadHotArticles()
-    }
-  }
 
   onMounted(() => {
-    syncPlatform()
-    window.addEventListener('resize', syncPlatform, { passive: true })
+    platform.value = window.matchMedia('(max-width: 767px)').matches ? 'wap' : 'pc'
   })
-  onBeforeUnmount(() => window.removeEventListener('resize', syncPlatform))
 
   async function loadColumns() {
     if (!site.value) return
@@ -61,9 +38,6 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
 
   async function loadArticles(typeId?: number, page = 1) {
     if (!site.value) return
-    lastList = { typeId, page }
-    lastView = 'list'
-    lastArticleId = undefined
     pending.value = true
     error.value = ''
     try {
@@ -93,7 +67,6 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
       articles.value = [...articles.value, ...nextArticles.filter((article) => !existingIds.has(article.ID))]
       pageTotal.value = Number(result.Result?.PageTotal || pageTotal.value)
       total.value = Number(result.Total || total.value)
-      lastList = { typeId, page }
       return true
     } catch (cause) {
       appendError.value = cause instanceof Error ? cause.message : '加载更多文章失败'
@@ -146,9 +119,6 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
 
   async function loadArticle(id: number) {
     if (!site.value) return
-    lastArticleId = id
-    lastView = 'detail'
-    lastList = undefined
     pending.value = true
     error.value = ''
     try {
@@ -180,9 +150,6 @@ export function useNews(site: Ref<SiteConfig | undefined>) {
 
   async function loadHome() {
     if (!site.value) return
-    lastView = 'home'
-    lastArticleId = undefined
-    lastList = undefined
     pending.value = true
     error.value = ''
     await loadColumns()
