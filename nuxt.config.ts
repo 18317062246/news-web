@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: 'https://news.centanet.com/api/',
+      apiBase: 'https://testnews.centanet.com/api/',
       staticBase: '',
       mockApi: false
     }
