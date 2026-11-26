@@ -24,7 +24,13 @@ const safeContent = computed(() => article.value?.Content ? DOMPurify.sanitize(a
 }) : '')
 
 useHead(() => ({
-  title: article.value?.Title || site.value?.title || '中原地产'
+  title: article.value?.Title
+    ? `${article.value.Title} - ${site.value?.title || '中原地产'}`
+    : site.value?.title || '中原地产',
+  meta: [
+    { name: 'keywords', content: site.value?.seoKeywords || '' },
+    { name: 'description', content: site.value?.seoDescription || '' }
+  ]
 }))
 
 function loadDetail() {

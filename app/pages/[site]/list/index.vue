@@ -20,7 +20,15 @@ const loadMoreSentinel = ref<HTMLElement | null>(null)
 let loadMoreObserver: IntersectionObserver | undefined
 let scrollCheckFrame = 0
 
-useHead(() => ({ title: activeColumn.value?.ColumnsName ? `${activeColumn.value.ColumnsName} - ${site.value?.title}` : site.value?.title }))
+useHead(() => ({
+  title: activeColumn.value?.ColumnsName
+    ? `${activeColumn.value.ColumnsName} - ${site.value?.title}`
+    : site.value?.title,
+  meta: [
+    { name: 'keywords', content: site.value?.seoKeywords || '' },
+    { name: 'description', content: site.value?.seoDescription || '' }
+  ]
+}))
 
 async function load() {
   await loadColumns()

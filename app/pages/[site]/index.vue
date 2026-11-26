@@ -19,7 +19,13 @@ watch(homeSections, (sections) => {
   if (first && !sections.some(({ column }) => column.Id === activeId.value)) activeId.value = first.column.Id
 }, { immediate: true })
 
-useHead(() => ({ title: site.value?.title || '研究院观点' }))
+useHead(() => ({
+  title: site.value?.title || '研究院观点',
+  meta: [
+    { name: 'keywords', content: site.value?.seoKeywords || '' },
+    { name: 'description', content: site.value?.seoDescription || '' }
+  ]
+}))
 
 function updateViewportMode() {
   isWap.value = window.matchMedia('(max-width: 767px)').matches

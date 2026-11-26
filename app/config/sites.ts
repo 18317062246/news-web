@@ -5,6 +5,8 @@ export interface SiteConfig {
   enabled: boolean
   navTitle: string
   title: string
+  seoKeywords: string
+  seoDescription: string
   brandMark: string
   brandTitle: string
   staticPrefix: string
@@ -28,6 +30,8 @@ export const cityRegistry: SiteConfig[] = [
     enabled: true,
     navTitle: '中原地产研究院',
     title: '中原地产_研究院观点',
+    seoKeywords: '香港最新房产新闻,香港房产资讯,香港楼市政策,香港房产资讯,香港房地产新闻',
+    seoDescription: '香港房产新闻,香港中原地产提供最及时香港房产新闻、香港房地产资讯，为您解读香港房产最新政策，预测香港房价走势，分析香港楼市成交数据。中原地产最资深最可靠的房地产网站。',
     brandMark: '中原',
     brandTitle: '研究院观点',
     staticPrefix: '',
@@ -36,19 +40,28 @@ export const cityRegistry: SiteConfig[] = [
   },
   {
     key: 'tj', apiCity: 'tj', cityName: '天津', enabled: true,
-    navTitle: '天津资讯', title: '天津房地产资讯', brandMark: '天津中原', brandTitle: '天津资讯',
+    navTitle: '天津资讯', title: '天津房地产资讯',
+    seoKeywords: '天津最新房产新闻,天津房产资讯,天津楼市政策,天津房产资讯,天津房地产新闻',
+    seoDescription: '天津房产新闻,天津中原地产提供最及时天津房产新闻、天津房地产资讯，为您解读天津房产最新政策，预测天津房价走势，分析天津楼市成交数据。中原地产最资深最可靠的房地产网站。',
+    brandMark: '天津中原', brandTitle: '天津资讯',
     staticPrefix: '', defaultImage,
     features: { search: false, citySwitch: false, sidebar: false }
   },
   {
     key: 'sh', apiCity: 'sh', cityName: '上海', enabled: true,
-    navTitle: '上海资讯', title: '上海房地产资讯', brandMark: '上海中原', brandTitle: '上海资讯',
+    navTitle: '上海资讯', title: '上海房地产资讯',
+    seoKeywords: '上海最新房产新闻,上海房产资讯,上海楼市政策,上海房产资讯,上海房地产新闻',
+    seoDescription: '上海房产新闻,上海中原地产提供最及时上海房产新闻、上海房地产资讯，为您解读上海房产最新政策，预测上海房价走势，分析上海楼市成交数据。中原地产最资深最可靠的房地产网站。',
+    brandMark: '上海中原', brandTitle: '上海资讯',
     staticPrefix: '', defaultImage,
     features: { search: false, citySwitch: false, sidebar: false }
   },
   {
     key: 'bj', apiCity: 'bj', cityName: '北京', enabled: true,
-    navTitle: '北京资讯', title: '北京房地产资讯', brandMark: '北京中原', brandTitle: '北京资讯',
+    navTitle: '北京资讯', title: '北京房地产资讯',
+    seoKeywords: '北京最新房产新闻,北京房产资讯,北京楼市政策,北京房产资讯,北京房地产新闻',
+    seoDescription: '北京房产新闻,北京中原地产提供最及时北京房产新闻、北京房地产资讯，为您解读北京房产最新政策，预测北京房价走势，分析北京楼市成交数据。中原地产最资深最可靠的房地产网站。',
+    brandMark: '北京中原', brandTitle: '北京资讯',
     staticPrefix: '', defaultImage,
     features: { search: false, citySwitch: false, sidebar: false }
   }
