@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DOMPurify from 'dompurify'
 import Sidebar from '../../../components/Sidebar.vue'
+import { updateWechatShare } from '../../../composables/useWechatShare'
 const route = useRoute()
 const { site } = useSite(route.params.site as string)
 const { article, hotArticles, pending, error, loadArticle, loadHotArticles } = useNews(site)
@@ -45,6 +46,15 @@ onMounted(() => {
 
 watch(() => route.params.id, () => {
   if (import.meta.client) loadDetail()
+})
+
+watch(article, (value) => {
+  if (!value) return
+  void updateWechatShare({
+    title: value.Title || '中原地产',
+    description: value.ShareTitle || value.Description,
+    image: value.LitPic
+  })
 })
 
 function formatRankingDate(value: string | number | undefined) {
