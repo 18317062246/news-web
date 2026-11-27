@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ArticleSummary } from '../types/news'
+import { withWebpFormat } from '../utils/image'
 
 const props = defineProps<{
   siteKey: string
@@ -15,9 +16,9 @@ function articleHref(siteKey: string, id: number) {
 function imageUrl(url: string | undefined, size: 'desktop' | 'mobile') {
   if (!url) return props.defaultImage
   const match = url.match(/^(.*)(\.[^./?#]+)([?#].*)?$/)
-  if (!match) return url
+  if (!match) return withWebpFormat(url)
   const suffix = size === 'desktop' ? '_450x320_w' : '_180x130_c'
-  return `${match[1]}${suffix}${match[2]}${match[3] || ''}`
+  return withWebpFormat(`${match[1]}${suffix}${match[2]}${match[3] || ''}`)
 }
 
 function onImageError(event: Event) {

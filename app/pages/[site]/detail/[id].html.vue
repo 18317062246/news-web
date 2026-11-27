@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DOMPurify from 'dompurify'
 import Sidebar from '../../../components/Sidebar.vue'
+import { withWebpFormat } from '../../../utils/image'
 const route = useRoute()
 const { site } = useSite(route.params.site as string)
 const { article, hotArticles, pending, error, loadArticle, loadHotArticles } = useNews(site)
@@ -17,11 +18,18 @@ const publishDate = computed(() => {
     timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit'
   }).format(date)
 })
-const safeContent = computed(() => article.value?.Content ? DOMPurify.sanitize(article.value.Content, {
-  USE_PROFILES: { html: true },
-  FORBID_TAGS: ['style', 'script', 'iframe', 'object', 'embed'],
-  FORBID_ATTR: ['style', 'onerror', 'onclick', 'onload']
-}) : '')
+const safeContent = computed(() => {
+  if (!article.value?.Content) return ''
+  const sanitized = DOMPurify.sanitize(article.value.Content, {
+    USE_PROFILES: { html: true },
+    FORBID_TAGS: ['style', 'script', 'iframe', 'object', 'embed'],
+    FORBID_ATTR: ['style', 'onerror', 'onclick', 'onload']
+  })
+  return sanitized.replace(/(<img\b[^>]*\bsrc\s*=\s*)(["'])([^"']+)\2/gi,
+      (_match, prefix: string, quote: string, url: string) => (
+    `${prefix}${quote}${withWebpFormat(url) || url}${quote}`
+  ))
+})
 
 useHead(() => ({
   title: article.value?.Title
